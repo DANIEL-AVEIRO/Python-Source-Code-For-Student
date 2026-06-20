@@ -20,7 +20,6 @@ class CategoryModel(BaseModel):
 
     class Meta:
         verbose_name_plural = "Categories"
-        app_label = "core"
         db_table = "categories"
 
 
@@ -40,7 +39,6 @@ class PostModel(BaseModel):
 
     class Meta:
         verbose_name_plural = "Posts"
-        app_label = "core"
         db_table = "posts"
 
 
@@ -56,5 +54,18 @@ class CommentModel(BaseModel):
 
     class Meta:
         verbose_name_plural = "Comments"
-        app_label = "core"
         db_table = "comments"
+
+
+class UserProfileModel(BaseModel):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="user_profile"
+    )
+    bio = models.TextField(blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    profile = models.ImageField(upload_to="profile_images", blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "User Profiles"
+        db_table = "user_profiles"

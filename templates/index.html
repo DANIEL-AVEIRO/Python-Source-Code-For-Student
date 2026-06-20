@@ -7,18 +7,27 @@
 <div class="row">
     {% if posts %}
     {% for post in posts %}
-    <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+    <div class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100">
             {% if post.image %}
             <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}"
                 style="height: 200px; object-fit: cover;">
             {% else %}
-            <div class="bg-secondary" style="height: 200px;"></div>
+            <img src="{% static 'images/placeholder.png' %}" class="card-img-top" alt="{{ post.title }}"
+                style="height: 200px; object-fit: cover;">
             {% endif %}
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text text-truncate">{{ post.content }}</p>
                 <a href="{% url 'post_details' post.id %}" class="btn btn-primary mt-auto">Read More</a>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <span data-bs-toggle="modal" data-bs-target="#viewersModal_{{ post.id }}" class="text-muted"><i
+                        class="fa fa-eye"></i> {{ post.viewers.count }}</span>
+                <span data-bs-toggle="modal" data-bs-target="#commentsModal_{{ post.id }}" class="text-muted"><i
+                        class="fa fa-comment"></i> {{ post.comments.count }}</span>
+                <span class="text-muted"><i class="fa fa-calendar"></i> {{ post.created_at|date:"M d, Y" }}</span>
+                <span class="text-muted"><i class="fa fa-clock"></i> {{ post.created_at|time:"h:i A" }}</span>
             </div>
         </div>
     </div>
@@ -27,4 +36,54 @@
     <p class="text-center">No posts available.</p>
     {% endif %}
 </div>
+
+{% for post in posts %}
+<div class="modal fade" id="viewersModal_{{ post.id }}" tabindex="-1" aria-labelledby="viewersModalLabel_{{ post.id }}"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewersModalLabel_{{ post.id }}">Viewers</h5>
+            </div>
+            <div class="modal-body">
+                {% for viewer in post.viewers.all %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="mb-0"><strong>{{ viewer.username }}</strong></p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center">No viewers found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% for post in posts %}
+<div class="modal fade" id="commentsModal_{{ post.id }}" tabindex="-1"
+    aria-labelledby="commentsModalLabel_{{ post.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentsModalLabel_{{ post.id }}">Comments</h5>
+            </div>
+            <div class="modal-body">
+                {% for comment in post.comments.all %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="mb-0"><strong>{{ comment.content }}</strong></p>
+                        <small class="text-muted">
+                            By {{ comment.author.username }} on {{ comment.created_at|date:"F d, Y H:i A"}}</small>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center">No comments found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
 {% endblock %}

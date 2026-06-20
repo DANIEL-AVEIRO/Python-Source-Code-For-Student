@@ -13,6 +13,7 @@
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
                 </li>
+                {% if request.user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/post/list/' %}active{% endif %}"
                         href="{% url 'post_list' %}">Posts</a>
@@ -21,6 +22,7 @@
                     <a class="nav-link {% if request.path == '/category/list/' %}active{% endif %}"
                         href="{% url 'category_list' %}">Categories</a>
                 </li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -34,7 +36,7 @@
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search"
-                    value="{{ search }}">
+                    value="{{ search|default:'' }}">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
