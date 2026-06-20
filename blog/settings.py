@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from django.contrib import messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -88,3 +89,10 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MESSAGE_TAGS = {
+    messages.SUCCESS: "alert-success",
+    messages.ERROR: "alert-danger",
+    messages.WARNING: "alert-warning",
+    messages.INFO: "alert-info",
+}
