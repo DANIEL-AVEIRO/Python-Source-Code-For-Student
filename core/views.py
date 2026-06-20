@@ -1,4 +1,4 @@
-from core.models import PostModel, CategoryModel, CommentModel
+from core.models import PostModel, CategoryModel, CommentModel, UserProfileModel
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -229,6 +229,8 @@ def register(request):
             username=username, email=email, password=password
         )
         user.save()
+        user_profile = UserProfileModel.objects.create(user=user)
+        user_profile.save()
         messages.success(request, "Registered successfully. Please log in.")
         return redirect("login")
 
@@ -267,3 +269,38 @@ def comment_delete(request, pk):
     comment.delete()
     messages.success(request, "Comment deleted successfully")
     return redirect("post_details", pk=comment.post.id)
+
+
+# ====================
+# Profile
+# ====================
+@login_required(login_url="login")
+def profile(request):
+    user_profile = UserProfileModel.objects.get(user_id=request.user.id)
+    if request.method == "GET":
+        context = {}
+        return render(request, "profile.html", context)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        bio = request.POST.get("bio")
+        phone = request.POST.get("phone")
+        address = request.POST.get("address")
+        profile = request.FILES.get("profile")
+
+        user = User.objects.get(id=request.user.id)
+        user.username = username
+        user.email = email
+        user.save()
+
+        user_profile = UserProfileModel.objects.get(user=user)
+        user_profile.bio = bio
+        user_profile.phone = phone
+        user_profile.address = address
+        if profile:
+            if user_profile.profile:
+                user_profile.profile.delete()
+            user_profile.profile = profile
+        user_profile.save()
+        messages.success(request, "Profile updated successfully")
+        return redirect("profile")

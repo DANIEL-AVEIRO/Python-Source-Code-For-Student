@@ -58,9 +58,7 @@ class CommentModel(BaseModel):
 
 
 class UserProfileModel(BaseModel):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="user_profile"
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     bio = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
