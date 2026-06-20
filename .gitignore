@@ -1,0 +1,70 @@
+# ==========================================
+# Django Specific
+# ==========================================
+*.log
+local_settings.py
+# db.sqlite3
+db.sqlite3-journal
+# media/
+staticfiles/
+
+# ==========================================
+# Python Environments & Artifacts
+# ==========================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+ENV.venv/
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+# .env
+.venv
+*.env
+secret_key.txt
+
+# ==========================================
+# IDEs and Text Editors
+# ==========================================
+# VS Code
+.vscode/
+
+# PyCharm / IntelliJ
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# Operating System Junk
+# ==========================================
+.DS_Store
+Thumbs.db
