@@ -67,3 +67,6 @@ class UserProfileModel(BaseModel):
     class Meta:
         verbose_name_plural = "User Profiles"
         db_table = "user_profiles"
+
+    def __str__(self):
+        return f"{self.user.username}"
