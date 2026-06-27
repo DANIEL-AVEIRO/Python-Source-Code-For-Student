@@ -1,11 +1,11 @@
 # Blog Project (Django)
 
-Django နဲ့ ရေးထားတဲ့ Blog Website ပရောဂျက်ဖြစ်ပါတယ်။  
+Django နဲ့ ရေးထားတဲ့ Blog Website ပရောဂျက်ဖြစ်ပါတယ်။
 Post, Category, Comment, Register/Login, Profile, Password Reset (Email) feature တွေ ပါဝင်ပါတယ်။
 
 ---
 
-## Setup Guide — သင့် OS ရွေးပါ
+## Setup Guide - သင့် OS ရွေးပါ
 
 | OS | File |
 |----|------|
@@ -15,6 +15,12 @@ Post, Category, Comment, Register/Login, Profile, Password Reset (Email) feature
 
 ---
 
+## API Routes
+
+Project ရဲ့ URL/route အားလုံး: [API-ROUTES.md](API-ROUTES.md)
+
+---
+
 ## Tech Stack
 
-Django 6 · SQLite3 · Bootstrap · Jazzmin · Pillow · django-pwa
+Django 6, SQLite3, Bootstrap, Jazzmin, Pillow, django-pwa

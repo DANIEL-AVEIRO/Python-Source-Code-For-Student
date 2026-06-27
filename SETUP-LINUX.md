@@ -1,4 +1,4 @@
-# Setup Guide — Linux
+# Setup Guide - Linux
 
 Terminal သုံးပါ။ Command အားလုံးမှာ `python3` သုံးပါ။
 
@@ -23,7 +23,7 @@ python3 --version
 
 ## Setup (အဆင့် ၆)
 
-### အဆင့် ၁ — Project folder ထဲဝင်ပါ
+### အဆင့် ၁ - Project folder ထဲဝင်ပါ
 
 `manage.py` file ရှိတဲ့ folder က project root ဖြစ်ပါတယ်။
 
@@ -33,7 +33,7 @@ cd /path/to/blog
 
 ---
 
-### အဆင့် ၂ — Virtual Environment ဖန်တီးပြီး ဖွင့်ပါ
+### အဆင့် ၂ - Virtual Environment ဖန်တီးပြီး ဖွင့်ပါ
 
 ```bash
 python3 -m venv .venv
@@ -49,7 +49,7 @@ deactivate
 
 ---
 
-### အဆင့် ၃ — Packages install လုပ်ပါ
+### အဆင့် ၃ - Packages install လုပ်ပါ
 
 venv activate လုပ်ထားပြီးမှ run ပါ:
 
@@ -59,7 +59,7 @@ pip install -r requirements.txt
 
 ---
 
-### အဆင့် ၄ — `.env` file ပြင်ဆင်ပါ
+### အဆင့် ၄ - `.env` file ပြင်ဆင်ပါ
 
 ```bash
 cp .env.example .env
@@ -84,16 +84,16 @@ SECRET_KEY ထုတ်ရန်:
 python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-> `.env` file က git ထဲ မထည့်ပါနဲ့ — password, secret key ပါဝင်ပါတယ်။
+> `.env` file က git ထဲ မထည့်ပါနဲ့ - password, secret key ပါဝင်ပါတယ်။
 
 **Forgot Password (Email) အတွက် Gmail App Password:**
-1. Google Account → Security → 2-Step Verification ဖွင့်ပါ
-2. App Passwords → Mail ရွေးပြီး password ထုတ်ပါ
+1. Google Account > Security > 2-Step Verification ဖွင့်ပါ
+2. App Passwords > Mail ရွေးပြီး password ထုတ်ပါ
 3. ထုတ်ထားတဲ့ password ကို `EMAIL_HOST_PASSWORD` ထဲ ထည့်ပါ
 
 ---
 
-### အဆင့် ၅ — Database setup
+### အဆင့် ၅ - Database setup
 
 ```bash
 python3 manage.py migrate
@@ -104,21 +104,21 @@ Username, Email, Password ထည့်ပြီး admin account ဖန်တီ
 
 ---
 
-### အဆင့် ၆ — Server စတင်ပါ
+### အဆင့် ၆ - Server စတင်ပါ
 
 ```bash
 python3 manage.py runserver
 ```
 
 Browser မှာ ဖွင့်ပါ:
-- Home → http://127.0.0.1:8000/
-- Admin → http://127.0.0.1:8000/admin/
+- Home: http://127.0.0.1:8000/
+- Admin: http://127.0.0.1:8000/admin/
 
 Server ရပ်ရန်: `Ctrl + C`
 
 ---
 
-## Setup ပြီးသွားပြီ ✓
+## Setup ပြီး
 
 ---
 
@@ -135,8 +135,9 @@ sudo apt install python3 python3-pip python3-venv
 pip install python-dotenv django-jazzmin django-pwa pillow
 ```
 
-**Email မပို့နိုင်ဘူး**  
-→ `.env` ထဲက email/password မှန်မှု စစ်ပါ။ Gmail App Password သုံးပါ။
+**Email မပို့နိုင်ဘူး**
+
+`.env` ထဲက email/password မှန်မှု စစ်ပါ။ Gmail App Password သုံးပါ။
 
 **Port 8000 already in use**
 ```bash

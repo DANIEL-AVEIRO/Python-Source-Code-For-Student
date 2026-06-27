@@ -41,10 +41,10 @@ urlpatterns = (
         path(
             "reset-password/<str:token>/", views.reset_password, name="reset_password"
         ),
-        # ========== 404 URLs ==========
-        # re_path(r"^.*$", views.page_not_found, name="page_not_found"),
         # ========= PWA URLs ==========
         path("", include("pwa.urls")),
+        # ========== 404 URLs ==========
+        re_path(r"^.*$", views.page_not_found, name="page_not_found"),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
