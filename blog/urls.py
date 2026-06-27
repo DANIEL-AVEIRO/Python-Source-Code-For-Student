@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include,re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from core import views
@@ -36,6 +36,8 @@ urlpatterns = (
         path("logout/", views.logout_view, name="logout"),
         path("register/", views.register, name="register"),
         path("profile/", views.profile, name="profile"),
+        # ========== 404 URLs ==========
+        re_path(r"^.*$", views.page_not_found, name="page_not_found"),
         # ========= PWA URLs ==========
         path("", include("pwa.urls")),
     ]

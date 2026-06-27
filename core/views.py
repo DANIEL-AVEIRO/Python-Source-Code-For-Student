@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 # ====================
@@ -13,7 +14,12 @@ def index(request):
     search = request.GET.get("search")
     posts = PostModel.objects.filter(is_active=True).order_by("-created_at")
     if search:
-        posts = posts.filter(title__icontains=search)
+        posts = posts.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(category__name__icontains=search)
+            | Q(author__username__icontains=search)
+        )
     context = {"posts": posts, "search": search}
     return render(request, "index.html", context)
 
@@ -304,3 +310,10 @@ def profile(request):
         user_profile.save()
         messages.success(request, "Profile updated successfully")
         return redirect("profile")
+
+
+# ====================
+# Page Not Found
+# ====================
+def page_not_found(request):
+    return render(request, "page_not_found.html")
