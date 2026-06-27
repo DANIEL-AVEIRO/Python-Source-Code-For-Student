@@ -4,6 +4,27 @@
 
 {% block body %}
 <h1>Profile</h1>
-<p>Welcome, {{ user.username }}!</p>
-<a href="{% url 'logout' %}">Logout</a>
+<div class="row">
+    <div class="col-md-4">
+        {% if request.user.profile.profile %}
+        <img src="{{ request.user.profile.profile.url }}" alt="{{ request.user.username }}"
+            style="width:100px;height: 100px;object-fit: cover;border-radius: 50%;border:1px solid #000">
+        {% else %}
+        <img src="{% static 'images/placeholder.png' %}" alt="{{ request.user.username }}"
+            style="width:100px;height: 100px;object-fit: cover;border-radius: 50%;border:1px solid #000">
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <h2>{{ request.user.username }}</h2>
+        <p>{{ request.user.email }}</p>
+        <p>{{ request.user.profile.bio }}</p>
+        <p>{{ request.user.profile.phone }}</p>
+        <p>{{ request.user.profile.address }}</p>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+    </div>
+</div>
 {% endblock %}
