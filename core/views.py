@@ -1,17 +1,27 @@
-from core.models import PostModel, CategoryModel, CommentModel, UserProfileModel
+from core.models import (
+    PostModel,
+    CategoryModel,
+    CommentModel,
+    UserProfileModel,
+    PasswordResetTokenModel,
+)
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
+import uuid
+from datetime import datetime, timedelta
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # ====================
 # Home
 # ====================
 def index(request):
-    search = request.GET.get("search")
+    search = request.GET.get("search", "")
     posts = PostModel.objects.filter(is_active=True).order_by("-created_at")
     if search:
         posts = posts.filter(
@@ -317,3 +327,65 @@ def profile(request):
 # ====================
 def page_not_found(request):
     return render(request, "page_not_found.html")
+
+
+# ====================
+# Forgot Password
+# ====================
+def forgot_password(request):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            return redirect("home")
+        return render(request, "forgot_password.html")
+    if request.method == "POST":
+        email = request.POST.get("email")
+        user = User.objects.filter(email=email).first()
+        if not user:
+            messages.error(request, "User not found")
+            return redirect("forgot_password")
+        else:
+            password_reset_token = str(uuid.uuid4())
+            password_reset_token_expiry = datetime.now() + timedelta(hours=1)
+            password_reset_token = PasswordResetTokenModel.objects.create(
+                user=user,
+                token=password_reset_token,
+                expiry_time=password_reset_token_expiry,
+            )
+            password_reset_token.save()
+            subject = "Password Reset"
+            message = f"Click the link below to reset your password: {request.scheme}://{request.get_host()}/reset-password/{password_reset_token.token}"
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [email]
+            send_mail(subject, message, from_email, recipient_list)
+            messages.success(
+                request,
+                "Password reset email sent successfully. Please check your email for the reset link.",
+            )
+            return redirect("login")
+
+
+# ====================
+# Reset Password
+# ====================
+def reset_password(request, token):
+    password_reset_token = PasswordResetTokenModel.objects.filter(token=token).first()
+    if not password_reset_token:
+        messages.error(request, "Invalid token")
+        return redirect("login")
+    else:
+        if request.method == "GET":
+            if request.user.is_authenticated:
+                return redirect("home")
+            return render(request, "reset_password.html", {"token": token})
+        if request.method == "POST":
+            new_password = request.POST.get("new_password")
+            confirm_new_password = request.POST.get("confirm_new_password")
+            if new_password != confirm_new_password:
+                messages.error(request, "Passwords do not match")
+                return redirect("reset_password", token=token)
+            else:
+                user = password_reset_token.user
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, "Password reset successfully")
+                return redirect("login")

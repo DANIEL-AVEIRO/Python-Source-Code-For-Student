@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include,re_path
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from core import views
@@ -36,8 +36,13 @@ urlpatterns = (
         path("logout/", views.logout_view, name="logout"),
         path("register/", views.register, name="register"),
         path("profile/", views.profile, name="profile"),
+        # ========== Forgot Password URLs ==========
+        path("forgot-password/", views.forgot_password, name="forgot_password"),
+        path(
+            "reset-password/<str:token>/", views.reset_password, name="reset_password"
+        ),
         # ========== 404 URLs ==========
-        re_path(r"^.*$", views.page_not_found, name="page_not_found"),
+        # re_path(r"^.*$", views.page_not_found, name="page_not_found"),
         # ========= PWA URLs ==========
         path("", include("pwa.urls")),
     ]

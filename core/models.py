@@ -70,3 +70,18 @@ class UserProfileModel(BaseModel):
 
     def __str__(self):
         return f"{self.user.username}"
+
+
+class PasswordResetTokenModel(BaseModel):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="password_reset_tokens"
+    )
+    token = models.CharField(max_length=200)
+    expiry_time = models.DateTimeField()
+
+    def __str__(self):
+        return f"Password reset token for {self.user.username}"
+
+    class Meta:
+        verbose_name_plural = "Password Reset Tokens"
+        db_table = "password_reset_tokens"

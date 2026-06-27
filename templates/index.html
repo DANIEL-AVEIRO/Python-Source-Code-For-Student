@@ -42,6 +42,8 @@
     {% endfor %}
 </div>
 
+<button class="btn btn-danger" onclick="clearCache()">Clear Cache</button>
+
 {% for post in posts %}
 <div class="modal fade" id="viewersModal_{{ post.id }}" tabindex="-1" aria-labelledby="viewersModalLabel_{{ post.id }}"
     aria-hidden="true">

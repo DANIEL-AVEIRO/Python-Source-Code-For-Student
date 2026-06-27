@@ -3,9 +3,9 @@
 # ==========================================
 *.log
 local_settings.py
-# db.sqlite3
+db.sqlite3
 db.sqlite3-journal
-# media/
+media/
 staticfiles/
 
 # ==========================================
@@ -45,9 +45,8 @@ share/python-wheels/
 # ==========================================
 # Environment Variables & Secrets
 # ==========================================
-# .env
+.env
 .venv
-*.env
 secret_key.txt
 
 # ==========================================
