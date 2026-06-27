@@ -99,10 +99,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MESSAGE_TAGS = {
-    messages.SUCCESS: "alert-success",
-    messages.ERROR: "alert-danger",
-    messages.WARNING: "alert-warning",
-    messages.INFO: "alert-info",
+    messages.SUCCESS: "success",
+    messages.ERROR: "danger",
+    messages.WARNING: "warning",
+    messages.INFO: "info",
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
